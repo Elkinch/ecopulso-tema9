@@ -1,0 +1,15 @@
+@startuml
+!include <C4/C4_Context>
+title Nivel 1 - Contexto de EcoPulso
+
+Person(resp, "Responsable de espacio", "Carga lecturas y configura umbrales")
+Person(est, "Estudiante", "Consulta el panel y participa en retos")
+System(eco, "EcoPulso", "Valida lecturas, compara con línea base, genera alertas explicadas y gestiona retos de ahorro")
+System_Ext(mail, "Servicio de correo", "Entrega los avisos por correo electrónico")
+System_Ext(fuente, "Fuente de lecturas", "Medición del laboratorio; exporta archivos CSV (simulados)")
+
+Rel(resp, eco, "Carga lecturas, configura umbrales")
+Rel(est, eco, "Consulta panel, registra acciones")
+Rel(eco, mail, "Envía alertas", "SMTP")
+Rel(fuente, eco, "Entrega archivos CSV", "carga manual")
+@enduml

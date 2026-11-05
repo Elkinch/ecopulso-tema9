@@ -1,0 +1,24 @@
+@startuml
+!include <C4/C4_Container>
+title Nivel 2 - Contenedores de EcoPulso
+
+Person(resp, "Responsable de espacio")
+Person(est, "Estudiante")
+System_Ext(fuente, "Fuente de lecturas", "Exporta CSV")
+System_Ext(mail, "Servicio de correo", "Entrega avisos")
+
+System_Boundary(eco, "EcoPulso") {
+  Container(web, "Aplicación web", "HTML y JavaScript", "Panel, carga manual y CSV, retos")
+  Container(api, "API de consumo", "Python, FastAPI", "Roles, validación, importación CSV, comparaciones")
+  ContainerDb(db, "Base de datos", "SQLite", "Lecturas, líneas base, umbrales, alertas, retos")
+  Container(alertas, "Servicio de alertas", "Proceso Python", "Evalúa umbrales y envía avisos con reintentos")
+}
+
+Rel(resp, web, "Usa", "HTTPS")
+Rel(est, web, "Usa", "HTTPS")
+Rel(web, api, "Llama", "JSON/HTTPS")
+Rel(api, db, "Lee y escribe", "SQL")
+Rel(alertas, db, "Lee lecturas, escribe alertas", "SQL")
+Rel(alertas, mail, "Envía avisos", "SMTP")
+Rel(fuente, api, "Entrega CSV", "carga")
+@enduml

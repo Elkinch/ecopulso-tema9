@@ -1,0 +1,21 @@
+1) El servicio de correo se apaga (se simula la caida).
+2) Llega una lectura de 120 kWh en Lab 1 (umbral 100 kWh).
+   La lectura se procesa aunque el correo este caido.
+3) El servicio de alertas intenta enviar: {'enviadas': 0, 'reintentos': 1, 'fallidas': 0}
+
+--- PANEL: la alerta NO se perdio; esta pendiente y visible ---
+  [PENDIENTE] intentos=1 | Lab 1: consumo de 120 kWh el 2026-11-03 supera el umbral de 100 kWh (regla: umbral 100 kWh).
+
+4) Primer reintento (1 min despues), el correo sigue caido:
+   {'enviadas': 0, 'reintentos': 1, 'fallidas': 0}
+
+--- PANEL: sigue pendiente; proximo reintento en 5 min ---
+  [PENDIENTE] intentos=2 | Lab 1: consumo de 120 kWh el 2026-11-03 supera el umbral de 100 kWh (regla: umbral 100 kWh).
+
+5) El servicio de correo se recupera.
+6) Reintento programado (6 min despues): {'enviadas': 1, 'reintentos': 0, 'fallidas': 0}
+
+--- PANEL: alerta enviada ---
+  [ENVIADA  ] intentos=2 | Lab 1: consumo de 120 kWh el 2026-11-03 supera el umbral de 100 kWh (regla: umbral 100 kWh).
+
+Correos entregados: 1

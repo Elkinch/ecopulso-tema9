@@ -1,0 +1,5 @@
+flowchart LR
+  resp([Responsable de espacio]) -->|Carga lecturas, configura umbrales| eco[EcoPulso]
+  est([Estudiante]) -->|Consulta panel, registra acciones| eco
+  eco -.->|Envía alertas SMTP| mail[[Servicio de correo - externo]]
+  fuente[[Fuente de lecturas - externo]] -.->|Archivos CSV| eco

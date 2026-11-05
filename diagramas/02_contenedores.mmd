@@ -1,0 +1,14 @@
+flowchart LR
+  resp([Responsable de espacio]) -->|HTTPS| web
+  est([Estudiante]) -->|HTTPS| web
+  fuente[[Fuente de lecturas - externo]] -.->|CSV carga| api
+  subgraph EcoPulso
+    web[Aplicación web<br/>HTML y JavaScript]
+    api[API de consumo<br/>Python, FastAPI]
+    db[(Base de datos<br/>SQLite)]
+    alertas[Servicio de alertas<br/>Proceso Python]
+    web -->|JSON/HTTPS| api
+    api -->|SQL| db
+    alertas -->|SQL| db
+  end
+  alertas -.->|SMTP| mail[[Servicio de correo - externo]]
